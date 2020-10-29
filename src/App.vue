@@ -1,28 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <main role="main" class="container">
+      <robos v-if="loaded" :roboList="robosData"></robos>
+      <span class="alert alert-danger" v-else>Something went wrong!... Please verify if the <strong>botomAPI</strong> service is running.</span>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Robos from '@/components/Robos.vue'
+const API_URL = "http://localhost:8081/robots";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Robos
+  },
+  data() {
+    return{
+      robosData: [],
+      loaded: false
+    }
+  },
+  created() {
+    fetch(API_URL)
+      .then(response => response.json())
+      .then(result => {
+        this.robosData = result.response.robos;
+        this.loaded = true;
+      });
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
