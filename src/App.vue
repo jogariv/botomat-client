@@ -10,7 +10,7 @@
 <script>
 
 import Robos from '@/components/Robos.vue'
-const API_URL = "http://localhost:8081/robots";
+const API_URL = "https://stark-sands-40775.herokuapp.com/robots";
 
 export default {
   name: 'App',
